@@ -13,7 +13,7 @@ import (
 const GAP = 2 + 2 // Gap between items + left border
 
 func printDir(dir string) {
-	fmt.Fprintln(os.Stdout, "╭"+dir)
+	fmt.Fprintln(os.Stdout, headerPrefix + dir)
 }
 
 func listItems(items []Item) {

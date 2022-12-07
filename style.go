@@ -34,46 +34,51 @@ var permIcons = map[byte]string{
 |-------------------------------|
 */
 var (
+  //headerPrefixes: "┌","╭","╭","▛","▗","┏","╔"," " - You can add more
+  headerPrefix = "╭"
 	// Pipe Style
 	defaultStyle = lipgloss.NewStyle().MarginRight(2)
-	detailsStyle = lipgloss.NewStyle().MarginRight(1)
 	// Default Terminal Style
 	normalStyle = defaultStyle.Copy().
-			Border(lipgloss.RoundedBorder() /*.ThickBorder()*/, false, false, false, true)
+		  Border(lipgloss.RoundedBorder(), false, false, false, true).
+      Foreground(lipgloss.AdaptiveColor{Light: "0",Dark: "7"})
+	// Bold Sample Style
+  boldStyle = normalStyle.Copy().Bold(true)
 	//Directory Style
-	dirStyle = normalStyle.Copy().
-			Foreground(lipgloss.Color("#0078ff")).
-			BorderForeground(lipgloss.Color("#0078ff")).
-			Bold(true)
+	dirStyle = boldStyle.Copy().
+			Foreground(lipgloss.Color("4")).
+			BorderForeground(lipgloss.Color("4"))
 	//Executable Style
-	execStyle = normalStyle.Copy().
-			Foreground(lipgloss.Color("#5aeb7e")).
-			BorderForeground(lipgloss.Color("#5aeb7e")).
-			Bold(true)
+	execStyle = boldStyle.Copy().
+			Foreground(lipgloss.Color("2")).
+			BorderForeground(lipgloss.Color("2"))
 	//Link Style
-	linkStyle = normalStyle.Copy().
-			Foreground(lipgloss.Color("#00ddff")).
-			BorderForeground(lipgloss.Color("#00ddff")).
-			Bold(true)
+	linkStyle = boldStyle.Copy().
+			Foreground(lipgloss.Color("6")).
+			BorderForeground(lipgloss.Color("6"))
 	//Broken Link Style
-	blinkStyle = normalStyle.Copy().
-			Foreground(lipgloss.Color("#aa0000")).
-			BorderForeground(lipgloss.Color("#aa0000")).
-			Bold(true)
-	//Permission Style
+	blinkStyle = boldStyle.Copy().
+			Foreground(lipgloss.Color("1")).
+			BorderForeground(lipgloss.Color("1"))
+	
+  // Long Format Details Style Sample
+	detailsStyle = lipgloss.NewStyle().MarginRight(1)
+  //Permission Style
 	permStyle = detailsStyle.Copy()
 	//Size style
 	sizeStyle = detailsStyle.Copy().
-			Foreground(lipgloss.Color("#5aeb7e"))
+			Foreground(lipgloss.Color("2"))
 	//User style
 	userStyle = detailsStyle.Copy().
-			Foreground(lipgloss.Color("#ff64b8"))
+			Foreground(lipgloss.Color("5"))
 	//Group style
 	groupStyle = detailsStyle.Copy().
-			Foreground(lipgloss.Color("#ec3aaa"))
+			Foreground(lipgloss.Color("5"))
 	//Date style
 	dateStyle = detailsStyle.Copy().
-			Foreground(lipgloss.Color("#ffff66"))
+			Foreground(lipgloss.Color("3"))
+
+
 )
 
 func styleItem(item Item) string {

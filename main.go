@@ -38,7 +38,7 @@ func main() {
 		fileStat, err := os.Stat(path)
 
 		if err != nil && strings.Contains(err.Error(), "no such file or directory") {
-			fmt.Fprintln(os.Stdout, path+": No such file or directory")
+			fmt.Fprintln(os.Stderr, path + ": No such file or directory")
 			continue
 		} else {
 			check(err)
@@ -70,7 +70,7 @@ func main() {
 			files, err := ioutil.ReadDir(dir)
 
 			if err != nil && strings.Contains(err.Error(), "permission denied") {
-				fmt.Fprintln(os.Stdout, dir+": Permission denied")
+				fmt.Fprintln(os.Stderr, dir + ": Permission denied")
 				continue
 			} else {
 				check(err)
