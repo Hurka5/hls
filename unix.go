@@ -9,6 +9,9 @@ import (
 	"io/fs"
 	"os"
 	"strings"
+  "os/user"
+  "syscall"
+  "strconv"
 )
 
 func (i Item) isHidden() bool {
@@ -58,4 +61,25 @@ func (item Item) isLink() (bool, bool) {
 		isBroken = true
 	}
 	return isLink, isBroken
+}
+
+
+func (item Item) Owner() (string, string) {
+  stat := item.info.Sys().(*syscall.Stat_t)
+
+  // Get IDs
+  uid := stat.Uid
+  gid := stat.Gid
+
+  // Convert to int
+  u := strconv.FormatUint(uint64(uid), 10)
+  g := strconv.FormatUint(uint64(gid), 10)
+
+  // Lookup
+  usr, err := user.LookupId(u)
+  check(err)
+  group, err := user.LookupGroupId(g)
+  check(err)
+
+  return usr.Username, group.Name
 }

@@ -3,9 +3,6 @@ package main
 import (
 	"fmt"
 	"os"
-	"os/user"
-	"strconv"
-	"syscall"
 )
 
 type Item struct {
@@ -52,27 +49,6 @@ func (item Item) Size() string {
 		exp++
 	}
 	return fmt.Sprintf("%.1f%c", float64(size)/float64(div), "kMGTPE"[exp])
-}
-
-// Only *nix
-func (item Item) Owner() (string, string) {
-	stat := item.info.Sys().(*syscall.Stat_t)
-
-	// Get IDs
-	uid := stat.Uid
-	gid := stat.Gid
-
-	// Convert to int
-	u := strconv.FormatUint(uint64(uid), 10)
-	g := strconv.FormatUint(uint64(gid), 10)
-
-	// Lookup
-	usr, err := user.LookupId(u)
-	check(err)
-	group, err := user.LookupGroupId(g)
-	check(err)
-
-	return usr.Username, group.Name
 }
 
 // Convert
